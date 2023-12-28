@@ -21,7 +21,7 @@ For an interactive view of the diagram, please see the [SOC Automation Project D
 - **Objective:** Build a logical diagram for the SOC Automation Homelab.
 - **Tools Used:** draw.io
 - **Key Learnings:** Understanding of SOC components and their interactions.
-- [Link to Part 1 Details](#part-1-details)
+- [Link to Part 1 Details](Part1-Diagram-Creation.md)
 
 ### Part 2: Installation of Applications and VMs
 - **Objective:** Install essential applications and virtual machines.
