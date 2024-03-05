@@ -126,6 +126,7 @@ To access and manage your Wazuh server:
      ```
      curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
      ```
+     ```
      sudo tar -xvf wazuh-install-files.tar
      ```
    - Note the Username and Password provided at the end of the installation. You will need these to log into your Wazuh dashboard.
