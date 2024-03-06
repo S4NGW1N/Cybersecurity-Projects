@@ -45,16 +45,26 @@ If you haven't installed VirtualBox yet, check out my [Tutorial on setting up Vi
 #### 1. Start Droplet Creation:
 - Log in to your Digital Ocean account.
 - Click on the "Create" button in the top right corner, then select "Droplets" from the dropdown menu.
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/3e97db45-9e3a-427a-bcd7-0d6f36fca907)
+
 
 #### 2. Configure Droplet:
 - **Region:** Choose a data center region that is closest to you for optimal performance.
 - **OS Selection:** For the operating system, select Ubuntu 22.04 (LTS) x64.
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/2f77651e-0b78-42b0-b87f-3e7530811336)
+
 - **Plan and Specs:** Select the "Basic" plan. Under "CPU Options", choose Premium Intel with NVMe SSD. Ensure your droplet has at least 8GB of RAM and 50 GB of hard drive space. This configuration is typically priced at $48/mo.
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/11b24267-12f4-46bb-a148-fed9deea52d7)
+
 - **Authentication:** You can create a droplet using either an SSH key or a password. For simplicity, we'll use a password in this tutorial (using a password manager is recommended for security).
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/115718e2-0710-48d8-a62b-c091c2ca7386)
+
 
 #### 3. Finalize and Create:
 - **Hostname:** Rename your droplet to "Wazuh" or any name you prefer.
 - Scroll down and click on "Create Droplet".
+![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/582983c9-666f-4020-81df-48ef6de47a03)
+
 
 ## Setting Up the Firewall for Wazuh Server Droplet
 
@@ -63,11 +73,10 @@ While waiting for your Wazuh Server droplet to be created, setting up a firewall
 ### Creating a Firewall
 #### 1. Navigate to Networking:
 - In your Digital Ocean dashboard, find "Networking" on the left-hand side under the "Manage" dropdown menu.
-
-#### 2. Access Firewalls:
 - Click on the "Firewalls" tab, then click on "Create Firewall".
+![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/40a41b68-dc49-45ec-baf7-6e972193cb8c)
 
-#### 3. Name Your Firewall:
+#### 2. Name Your Firewall:
 - You can name your firewall anything you like. For this tutorial, we'll name it "firewall".
 
 ### Configure Firewall Rules
@@ -76,6 +85,8 @@ While waiting for your Wazuh Server droplet to be created, setting up a firewall
 - Change the type to "All TCP" and remove all IPs under sources. We want to ensure that only connections from our public IP address are allowed.
 - Find your public IP address by visiting [http://whatismyipaddress.com](http://whatismyipaddress.com).
 - Add your public IP address to the list of allowed sources for both TCP and UDP connections.
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/48936686-3dbe-4d91-9af1-002adb5c7a91)
+
 
 #### 2. Complete the Firewall Setup:
 - After configuring the rules, scroll down and click "Create Firewall".
@@ -96,10 +107,14 @@ After setting up your firewall, the next step is to ensure it's protecting your 
 3. **Edit Firewall Settings:**
    - Select "Networking" and scroll down to "Firewalls".
    - Click on "Edit" next to the firewall you created.
+![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/6a955598-33bf-4b07-88e2-aaea5244f95f)
+
 
 4. **Add Your Droplet to the Firewall:**
    - In the "Firewalls" settings, click the "Droplets" tab then "Add Droplets".
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/1e2c1286-61d3-4876-b127-61a443e41132)
    - Enter the name of your Virtual Machine and click on "Add Droplet".
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/51703cf0-b7de-44b2-a631-79a63d511a1d)
 
 Now, your firewall is actively protecting your Virtual Machine.
 
@@ -111,6 +126,8 @@ To access and manage your Wazuh server:
 1. **Open Droplet Console:**
    - Go to "Wazuh" (your VM Hostname) under "Droplets" and click on the "Access" tab.
    - Click "Launch Droplet Console".
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/31ed4c4a-535f-4b3f-aa54-b6eddb6797d6)
+
 
 ### Update and Upgrade Your VM
 1. **Perform System Updates:**
@@ -119,6 +136,9 @@ To access and manage your Wazuh server:
      apt-get update && apt-get upgrade -y
      ```
    - Hit enter when prompted by any screens during the process.
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/d100b169-b373-42d7-9113-1d0aa120c0f4)
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/1db88c18-78b3-4cd1-8f9a-30472921c9ab)
+
 
 ### Installing Wazuh Server
 1. **Run Wazuh Installer:**
@@ -130,14 +150,20 @@ To access and manage your Wazuh server:
      sudo tar -xvf wazuh-install-files.tar
      ```
    - Note the Username and Password provided at the end of the installation. You will need these to log into your Wazuh dashboard.
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/d0cd6ff3-f608-441c-98ad-d35618ec18df)
+
 
 ### Accessing the Wazuh Dashboard
 1. **Open Wazuh Dashboard:**
    - Copy your server's public IP address (IPv4).
    - Open a new browser window and navigate to `https://<your_server_ip>`.
    - Log in using the username and password obtained during the installation.
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/347355a4-187f-4d9d-8ae5-1b12f6503f34)
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/901bd8e7-de23-4f5a-8491-5a853a0d5bad)
+     ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/82e52beb-3de9-4985-b43b-f8b186285dcf)
 
-Congratulations! You've successfully set up and accessed your Wazuh server on a Digital Ocean droplet, complete with firewall protection and system updates. Your Wazuh dashboard is now ready for use.
+#### Congratulations! You've successfully set up and accessed your Wazuh server on a Digital Ocean droplet, complete with firewall protection and system updates. Your Wazuh dashboard is now ready for use.
+
 
 
 ### The Hive Server
