@@ -34,7 +34,7 @@ If you haven't installed VirtualBox yet, check out my [Tutorial on setting up Vi
    - In Command Prompt, run `sysmon.exe -c` to check the current configuration, or in the Windows search bar type "services" and look for "Sysmon64"
    - You should see the default configuration settings.
 
-### Wazuh Server
+# Wazuh Server
 **Description:** Installing the Wazuh server using a Cloud Provider, which is a core component for security monitoring and incident response.
 
 ## Prerequisites
@@ -166,19 +166,149 @@ To access and manage your Wazuh server:
 
 
 
-### The Hive Server
-•	Description: Setting up The Hive server for case management in security incident response.
-•	Steps:
-1.	[Instructions for installing The Hive server]
-2.	[Configuration steps for operational readiness]
-•	Screenshot Suggestion: Show The Hive's interface with initial setup configurations.
+# The Hive Server
+
+### Steps to Install The Hive Server on Digital Ocean
+
+### 1. Start Droplet Creation for The Hive:
+- Log into your Digital Ocean account.
+- Click on the "Create" button in the top right corner, then select "Droplets" from the dropdown menu.
+
+### 2. Configure The Hive Droplet:
+- **Region:** Choose the same data center region used for your Wazuh server for optimal performance and reduced latency.
+- **OS Selection:** Select Ubuntu 22.04 (LTS) x64 as the operating system.
+- **Plan and Specs:** Choose the "Basic" plan. Under "CPU Options", select Premium Intel with NVMe SSD. Ensure the droplet has at least 8GB of RAM and 50 GB of hard drive space, similar to the Wazuh server setup. This configuration is typically priced at $48/mo.
+- **Authentication:** Use the same method (SSH key or password) as your Wazuh server for consistency. Using an SSH key is recommended for enhanced security.
+- **Hostname:** Name your droplet "The Hive".
+
+### 3. Finalize and Create The Hive Droplet:
+- Ensure the firewall you previously created for the Wazuh server is selected to be applied to "The Hive" droplet.
+- Scroll down and click on "Create Droplet".
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/bbbe7fff-b936-4c77-b404-d3016ad93459)
+
+
+### Assigning the Firewall to The Hive Droplet:
+- Since the firewall setup was completed during the Wazuh server installation, ensure "The Hive" droplet is added to the same firewall to maintain a consistent security posture.
+  ![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/6f10a008-4cf9-4872-b580-9fa164dff133)
+
+# The Hive Installation Guide
+
+This guide provides a comprehensive walkthrough for installing The Hive, including the necessary prerequisites such as Java, Cassandra, Elasticsearch, and The Hive itself.
+
+## Getting Started
+
+Ensure you have access to your server. Launch your Droplet console to SSH in. If you encounter issues, use the Launch Recovery Console. The default username is `root`, and the password is what you set during the droplet setup. If necessary, you can reset the password using the "Reset Root Password" button.
+
+## Installing Prerequisites
+
+Before installing Java, several packages need to be installed:
+
+```bash
+apt install wget gnupg apt-transport-https git ca-certificates ca-certificates-java curl software-properties-common python3-pip lsb-release
+```
+Enter Y for yes. 
+
+![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/f2523924-c02d-4837-a4d2-164714c6b008)
+
+When you encounter the purple screen hit enter.
+![image](https://github.com/S4NGW1N/Cybersecurity-Projects/assets/150701059/1ad575d6-a73a-46d9-9bb5-d15308e549b3)
+
+**OPTIONAL/Quick Fix**
+- If the "wget" command doesn't work for Java then the URL might be either incorrect or outdated or wget hasn't been installed.
+Try the following commands for a quick fix:
+```
+sudo apt update
+```
+```
+sudo apt install wget
+```
+**Side Note**
+- enter commands one by one. Copying and pasting it all at once can cause shell to be confused by lack of line breaks/proper command termination.
+  
+### Installing Java
+ Java is essential for running The Hive. Install it using the following commands:
+```
+wget -qO- https://apt.corretto.aws/corretto.key | sudo gpg --dearmor -o /usr/share/keyrings/corretto.gpg
+```
+```
+echo "deb [signed-by=/usr/share/keyrings/corretto.gpg] https://apt.corretto.aws stable main" | sudo tee -a /etc/apt/sources.list.d/corretto.sources.list
+```
+```
+sudo apt update
+```
+```
+sudo apt install java-common java-11-amazon-corretto-jdk
+```
+```
+echo JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto" | sudo tee -a /etc/environment 
+```
+```
+export JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto"
+```
+### Installing Cassandra
+Cassandra is the next component to install:
+```
+wget -qO - https://downloads.apache.org/cassandra/KEYS | sudo gpg --dearmor -o /usr/share/keyrings/cassandra-archive.gpg
+```
+```
+echo "deb [signed-by=/usr/share/keyrings/cassandra-archive.gpg] https://debian.cassandra.apache.org 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+```
+```
+sudo apt update
+```
+```
+sudo apt install cassandra
+```
+**Optional: Configuring Elastic Search**
+- If you choose to install Elastic Search, first configure JVM Options: 
+  Create a jvm.options file under /etc/elasticsearch/jvm.options.d
+```
+echo "-Dlog4j2.formatMsgNoLookups=true\n-Xms2g\n-Xmx2g" | sudo tee /etc/elasticsearch/jvm.options.d/jvm.options
+```
+### Installing Elastic Search
+Proceed with Installing Elastic Search:
+```
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+```
+```
+sudo apt-get install apt-transport-https
+```
+```
+echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+```
+```
+sudo apt update
+```
+```
+sudo apt install elasticsearch
+```
+### Installing The Hive
+Finally, Install The Hive:
+```
+wget -O- https://archives.strangebee.com/keys/strangebee.gpg | sudo gpg --dearmor -o /usr/share/keyrings/strangebee-archive-keyring.gpg
+```
+```
+echo 'deb [signed-by=/usr/share/keyrings/strangebee-archive-keyring.gpg] https://deb.strangebee.com thehive-5.2 main' | sudo tee -a /etc/apt/sources.list.d/strangebee.list
+```
+```
+sudo apt-get update
+```
+```
+sudo apt-get install -y thehive
+```
+
+### Accessing The Hive
+After installation, The Hive is accessible on port 9000. The default credentials are "admin@thehive.local" with the password "secret"
+Congratulations! You have successfully installed The Hive along with all the necessary components on your server.
 
 ## Tools Used
 •	Windows 10
+•	Cloud Provider (Digital Ocean)
 •	Sysmon
 •	Wazuh
 •	The Hive
 •	VirtualBox (for VM creation)
+
 
 ## Key Takeaways
 •	Setup and Configuration: Understanding the installation and configuration process of each tool.
