@@ -47,6 +47,7 @@ For an interactive view of the diagram, please see the [SOC Automation Project D
 
 ## Tools Used
 - draw.io for diagram creation.
+- Digital Ocean as Cloud Provider.
 - Wazuh for security monitoring.
 - SOAR tools for incident response automation.
 - TheHive for case management.
