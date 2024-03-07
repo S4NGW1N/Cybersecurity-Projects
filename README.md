@@ -27,12 +27,12 @@ For an interactive view of the diagram, please see the [SOC Automation Project D
 - **Objective:** Install essential applications and virtual machines.
 - **Tools Used:** Windows 10, Sysmon, Wazuh, The Hive
 - **Key Learnings:** Setup and configuration of SOC tools.
-- [Link to Part 2 Details](#part-2-details)
+- [Link to Part 2 Details](Part2-Installation-of-Applications-and-VMs.md)
 
 ### Part 3: Configuration of The Hive and Wazuh
 - **Objective:** Configure The Hive and Wazuh servers.
 - **Key Learnings:** Effective configuration for SOC operations.
-- [Link to Part 3 Details](#part-3-details)
+- [Link to Part 3 Details](Part3-Configure-TheHive-and-WazuhServer.md)
 
 ### Part 4: Telemetry Generation and Ingestion
 - **Objective:** Generate and ingest telemetry from a Windows 10 machine into Wazuh.
